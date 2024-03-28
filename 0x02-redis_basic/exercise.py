@@ -27,7 +27,6 @@ def count_calls(method: Callable) -> Callable:
 
     return increment
 
-
 class Cache:
     """
     Initializes an Object for data
@@ -68,5 +67,3 @@ class Cache:
         """
 
         return self.get(key, lambda x: int(x))
-
-
