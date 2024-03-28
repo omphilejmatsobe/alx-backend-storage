@@ -27,6 +27,7 @@ def count_calls(method: Callable) -> Callable:
 
     return increment
 
+
 def call_history(method: Callable) -> Callable:
     """
     Tracks the call details of a method in a Cache class
@@ -45,6 +46,7 @@ def call_history(method: Callable) -> Callable:
             self._redis.rpush(fin_key, output)
         return output
     return invoker
+
 
 def replay(fn: Callable) -> None:
     """
@@ -72,6 +74,7 @@ def replay(fn: Callable) -> None:
             fxn_input.decode("utf-8"),
             fxn_output,
         ))
+
 
 class Cache:
     """
