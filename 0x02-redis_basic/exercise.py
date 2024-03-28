@@ -7,6 +7,24 @@ import redis
 import uuid
 from typing import Any, Callable, Union
 
+def count_calls(method: Callable) -> Callable:
+    """
+    takes a single method Callable argument and returns a Callable
+    """
+
+    @wraps(method)
+    def increment(self, *args, **kwargs) -> Any:
+        """
+        increments the count for that key every time the method is called
+        and returns the value returned by the original method
+        """
+
+        if isinstance(self._redis, redis.Redis):
+            self._redis.incr(method.__qualname__)
+        return method(self, *args, **kwargs)
+
+    return increment
+
 
 class Cache:
     """
@@ -47,3 +65,5 @@ class Cache:
         """
 
         return self.get(key, lambda x: int(x))
+
+
